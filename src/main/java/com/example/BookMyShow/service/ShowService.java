@@ -159,4 +159,24 @@ public class ShowService {
         showDto.setAvailableSeats(seatDtos);
         return showDto;
     }
+
+
+    public List<ShowSeatDto> getAllSeatsForShow(Long showId) {
+        List<ShowSeat> allSeats = showSeatRepository.findByShowId(showId);
+        return allSeats.stream()
+                .map(seat -> {
+                    ShowSeatDto seatDto = new ShowSeatDto();
+                    seatDto.setId(seat.getId());
+                    seatDto.setStatus(seat.getStatus());
+                    seatDto.setPrice(seat.getPrice());
+                    SeatDto baseSeatDto = new SeatDto();
+                    baseSeatDto.setId(seat.getSeat().getId());
+                    baseSeatDto.setSeatNumber(seat.getSeat().getSeatNumber());
+                    baseSeatDto.setSeatType(seat.getSeat().getSeatType());
+                    baseSeatDto.setBasePrice(seat.getSeat().getBasePrice());
+                    seatDto.setSeat(baseSeatDto);
+                    return seatDto;
+                })
+                .collect(Collectors.toList());
+    }
 }

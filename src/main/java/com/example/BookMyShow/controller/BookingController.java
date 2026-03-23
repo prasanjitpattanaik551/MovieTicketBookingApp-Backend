@@ -1,4 +1,5 @@
 package com.example.BookMyShow.controller;
+
 import com.example.BookMyShow.dto.BookingDto;
 import com.example.BookMyShow.dto.BookingRequestDto;
 import com.example.BookMyShow.service.BookingService;
@@ -6,7 +7,6 @@ import com.example.BookMyShow.service.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
-     @Autowired
+
+    @Autowired
     private BookingService bookingService;
 
     @PostMapping
@@ -30,7 +31,6 @@ public class BookingController {
     {
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
-
 
     // Get booking by booking number
     @GetMapping("/number/{bookingNumber}")
@@ -52,5 +52,4 @@ public class BookingController {
     {
         return ResponseEntity.ok(bookingService.cancelBooking(id));
     }
-
 }

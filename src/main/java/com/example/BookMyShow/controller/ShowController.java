@@ -1,6 +1,7 @@
 package com.example.BookMyShow.controller;
 
 import com.example.BookMyShow.dto.ShowDto;
+import com.example.BookMyShow.dto.ShowSeatDto;
 import com.example.BookMyShow.service.ShowService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,11 @@ public class ShowController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 
         return ResponseEntity.ok(showService.getShowsByDateRange(start, end));
+    }
+
+
+    @GetMapping("/{id}/seats")
+    public ResponseEntity<List<ShowSeatDto>> getAllSeatsForShow(@PathVariable Long id) {
+        return ResponseEntity.ok(showService.getAllSeatsForShow(id));
     }
 }
