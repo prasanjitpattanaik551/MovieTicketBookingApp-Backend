@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class BookingService {
+public class  BookingService {
 
     @Autowired
     private UserRepository userRepository;
