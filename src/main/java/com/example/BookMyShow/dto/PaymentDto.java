@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
+
     private Long id;
     private String transactionId;
     private Double amount;
     private LocalDateTime paymentTime;
     private String paymentMethod;
     private String status;
-
-
+    private String orderId;            // ← add this
+    private String razorpayPaymentId;  // ← add this
 }

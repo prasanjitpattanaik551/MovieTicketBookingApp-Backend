@@ -37,6 +37,9 @@ public class WebSecurity {
                         .requestMatchers("/api/theaters/**").permitAll()
                         .requestMatchers("/api/bookings/**").permitAll()  // ← add
                         .requestMatchers("/api/users/**").permitAll()// ← add this
+                        .requestMatchers("/api/bookings/create-order").permitAll()
+                        .requestMatchers("/api/bookings/verify-payment").permitAll()
+                        .requestMatchers("/api/bookings/confirm").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {})

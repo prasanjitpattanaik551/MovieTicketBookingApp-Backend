@@ -1,5 +1,8 @@
+C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\BookMyShowApplication.java
+C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\config\CrossConfig.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\BookingController.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\MoviesController.java
+C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\PaymentController.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\ReviewController.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\ShowController.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\controller\TheaterController.java
@@ -42,6 +45,7 @@ C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\repository\UserRe
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\security\CustomUserDetailService.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\security\WebSecurity.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\service\BookingService.java
+C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\service\EmailService.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\service\MovieService.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\service\ReviewService.java
 C:\Spring_boot\BookMyShow\src\main\java\com\example\BookMyShow\service\ShowService.java

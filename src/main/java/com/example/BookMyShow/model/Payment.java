@@ -15,14 +15,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String transactionId;
 
     @Column(nullable = false)
@@ -35,10 +34,14 @@ public class Payment {
     private String paymentMethod;
 
     @Column(nullable = false)
-    private String status; //SUCCESS,FAILED,PENDING
+    private String status; // SUCCESS, FAILED, PENDING
+
+    @Column(unique = true)
+    private String orderId;           // ← add this
+
+    @Column
+    private String paymentId; // ← add this
 
     @OneToOne(mappedBy = "payment")
     private Booking booking;
-
-
 }
