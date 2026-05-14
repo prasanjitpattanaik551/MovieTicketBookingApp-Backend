@@ -218,6 +218,7 @@ public class BookingService {
             String aiMessage = callNvidiaAI(prompt);
 
             SimpleMailMessage mail = new SimpleMailMessage();
+            mail.setFrom("YOUR_OUTLOOK_EMAIL@outlook.com");
             mail.setTo(user.getEmail());
             mail.setSubject("🎬 Booking Confirmed - " + show.getMovie().getTitle());
             mail.setText(

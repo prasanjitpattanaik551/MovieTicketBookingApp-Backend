@@ -5,12 +5,20 @@ import com.example.BookMyShow.model.User;
 import com.example.BookMyShow.dto.UserDto;
 import com.example.BookMyShow.exception.ResourceNotFoundException;
 import com.example.BookMyShow.repository.UserRepository;
+import com.example.BookMyShow.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import java.time.LocalDateTime;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +33,69 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+
+
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    // STEP 1 — Generate OTP and send email
+    public String sendOtp(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+        // Generate 6-digit OTP
+        String otp = String.valueOf((int)(Math.random() * 900000) + 100000);
+
+        // Save OTP with 5 minute expiry
+        user.setOtp(otp);
+        user.setOtpExpiry(LocalDateTime.now().plusMinutes(5));
+        userRepository.save(user);
+
+        // Send OTP email
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom("YOUR_OUTLOOK_EMAIL@outlook.com");
+        mail.setTo(email);
+        mail.setSubject("Your OTP - MovieTicketBooking");
+        mail.setText(
+                "Hi " + user.getName() + ",\n\n" +
+                        "Your OTP for login is: " + otp + "\n\n" +
+                        "This OTP is valid for 5 minutes.\n\n" +
+                        "Team MovieTicketBooking"
+        );
+        mailSender.send(mail);
+
+        return "OTP sent to " + email;
+    }
+
+    // STEP 2 — Verify OTP and return JWT token
+    public String verifyOtp(String email, String otp) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        // Check OTP
+        if (user.getOtp() == null || !user.getOtp().equals(otp)) {
+            throw new RuntimeException("Invalid OTP");
+        }
+
+        // Check expiry
+        if (user.getOtpExpiry() == null || LocalDateTime.now().isAfter(user.getOtpExpiry())) {
+            throw new RuntimeException("OTP expired");
+        }
+
+        // Clear OTP after successful verify
+        user.setOtp(null);
+        user.setOtpExpiry(null);
+        userRepository.save(user);
+
+        // Return JWT token
+        return jwtTokenProvider.generateToken(email);
+    }
+
 
     public UserDto createUser(UserDto userDto)
     {
@@ -61,7 +132,8 @@ public class UserService {
                         loginRequest.getPassword()
                 )
         );
-        return "Login successful";
+        // Generate and return JWT token
+        return jwtTokenProvider.generateToken(loginRequest.getEmail());
     }
 
     public User mapToEntity(UserDto userDto) {

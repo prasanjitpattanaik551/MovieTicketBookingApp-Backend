@@ -16,6 +16,20 @@ public class UserController{
 
     private final UserService userService;
 
+
+    // Send OTP → POST /api/users/send-otp
+    @PostMapping("/send-otp")
+    public ResponseEntity<String> sendOtp(@RequestParam String email) {
+        return ResponseEntity.ok(userService.sendOtp(email));
+    }
+
+    // Verify OTP → POST /api/users/verify-otp
+    @PostMapping("/verify-otp")
+    public ResponseEntity<String> verifyOtp(@RequestParam String email,
+                                            @RequestParam String otp) {
+        return ResponseEntity.ok(userService.verifyOtp(email, otp));
+    }
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
